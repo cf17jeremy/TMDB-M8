@@ -1,6 +1,9 @@
 package com.example.fragments;
 
+import static com.example.fragments.Config.DefaultConstants.API_KEY;
 import static com.example.fragments.Config.DefaultConstants.BASE_IMG_URL;
+import static com.example.fragments.Config.DefaultConstants.SESSION_ID;
+import static com.example.fragments.Config.DefaultConstants.retrofit;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +23,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.fragments.Config.ApiCall;
 import com.example.fragments.Config.GlideApp;
+import com.example.fragments.Model.Film.FavFilmRequest;
+import com.example.fragments.Model.Film.FavFilmResponse;
 import com.example.fragments.Model.Film.Film;
 import com.example.fragments.Model.List.List;
 import com.example.fragments.Recyclers.AddMovieListsRecyclerViewAdapter;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
 
 
 public class DetailFragment extends Fragment {
@@ -62,6 +71,9 @@ public class DetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 btnFav.setImageResource(R.drawable.ic_fav_on);
+                ApiCall apiCall = retrofit.create(ApiCall.class);
+                Call<FavFilmResponse> call = apiCall.postData(API_KEY, SESSION_ID);
+                Log.i("FavList", call.toString());
             }
         });
 
